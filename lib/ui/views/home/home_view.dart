@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:we_slide/we_slide.dart';
 import 'package:weather_pal/ui/common/app_colors.dart';
+import 'package:weather_pal/ui/common/ui_helpers.dart';
 import 'package:weather_pal/ui/widgets/home/home_close_panel.dart';
 
 import 'package:weather_pal/ui/widgets/home/home_panel/home_panel.dart';
@@ -30,7 +31,7 @@ class HomeView extends StackedView<HomeViewModel> {
           isLocationEnabled: viewModel.locationEnabled,
           onTap: () => viewModel.openSettings(),
         ),
-        appBarHeight: 100,
+        appBarHeight: 130,
         // Body of the page
         body: HomeBody(
           weather: viewModel.weather,

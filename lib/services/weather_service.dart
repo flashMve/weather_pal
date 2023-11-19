@@ -95,7 +95,7 @@ class WeatherService with ListenableServiceMixin {
   Future<Weather> currentWeatherByLocation(
       double latitude, double longitude) async {
     Map<String, dynamic>? jsonResponse =
-        await _sendRequest(CURRENT_WEATHER, lat: latitude, lon: longitude);
+        await sendRequest(CURRENT_WEATHER, lat: latitude, lon: longitude);
     final weather = Weather(jsonResponse!);
     if (weatherData.containsKey(DateParser.parse())) {
       weatherData.remove(DateParser.parse());
@@ -111,7 +111,7 @@ class WeatherService with ListenableServiceMixin {
   /// For API documentation, see: https://openweathermap.org/current
   Future<Weather> currentWeatherByCityName(String cityName) async {
     Map<String, dynamic>? jsonResponse =
-        await _sendRequest(CURRENT_WEATHER, cityName: cityName);
+        await sendRequest(CURRENT_WEATHER, cityName: cityName);
     final weather = Weather(jsonResponse!);
     if (weatherData.containsKey(DateParser.parse())) {
       weatherData.remove(DateParser.parse());
@@ -128,7 +128,7 @@ class WeatherService with ListenableServiceMixin {
   Future<List<Weather>> fiveDayForecastByLocation(
       double latitude, double longitude) async {
     Map<String, dynamic>? jsonResponse =
-        await _sendRequest(FIVE_DAY_FORECAST, lat: latitude, lon: longitude);
+        await sendRequest(FIVE_DAY_FORECAST, lat: latitude, lon: longitude);
     List<Weather> forecast = (jsonResponse!.parseForecast());
     if (weatherData.containsKey('forecast')) {
       weatherData.remove('forecast');
@@ -145,7 +145,7 @@ class WeatherService with ListenableServiceMixin {
   /// For API documentation, see: https://openweathermap.org/forecast5
   Future<List<Weather>> fiveDayForecastByCityName(String cityName) async {
     Map<String, dynamic>? jsonForecast =
-        await _sendRequest(FIVE_DAY_FORECAST, cityName: cityName);
+        await sendRequest(FIVE_DAY_FORECAST, cityName: cityName);
     List<Weather> forecasts = (jsonForecast!.parseForecast());
     if (weatherData.containsKey('forecast')) {
       weatherData.remove('forecast');
@@ -178,7 +178,7 @@ class WeatherService with ListenableServiceMixin {
     return forecastsByDates;
   }
 
-  Future<Map<String, dynamic>?> _sendRequest(String tag,
+  Future<Map<String, dynamic>?> sendRequest(String tag,
       {double? lat, double? lon, String? cityName}) async {
     /// Build HTTP get url by passing the required parameters
     String url = _buildUrl(tag, cityName, lat, lon);

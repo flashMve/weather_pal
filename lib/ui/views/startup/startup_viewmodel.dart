@@ -77,7 +77,7 @@ class StartupViewModel extends BaseViewModel {
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
     try {
-      final position = await _determinePosition();
+      final position = await determinePosition();
 
       initState(pos: position);
       await Future.delayed(const Duration(seconds: 4)).then((value) {
@@ -102,7 +102,7 @@ class StartupViewModel extends BaseViewModel {
     // you have custom startup logic
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 

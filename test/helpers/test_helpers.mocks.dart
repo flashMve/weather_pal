@@ -7,6 +7,7 @@ import 'dart:async' as _i6;
 import 'dart:ui' as _i7;
 
 import 'package:flutter/material.dart' as _i5;
+import 'package:geolocator/geolocator.dart' as _i10;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i4;
 import 'package:stacked_services/stacked_services.dart' as _i3;
@@ -861,6 +862,27 @@ class MockWeatherService extends _i1.Mock implements _i8.WeatherService {
       ) as List<_i2.Weather>);
 
   @override
+  _i6.Future<Map<String, dynamic>?> sendRequest(
+    String? tag, {
+    double? lat,
+    double? lon,
+    String? cityName,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #sendRequest,
+          [tag],
+          {
+            #lat: lat,
+            #lon: lon,
+            #cityName: cityName,
+          },
+        ),
+        returnValue: _i6.Future<Map<String, dynamic>?>.value(),
+        returnValueForMissingStub: _i6.Future<Map<String, dynamic>?>.value(),
+      ) as _i6.Future<Map<String, dynamic>?>);
+
+  @override
   void listenToReactiveValues(List<dynamic>? reactiveValues) =>
       super.noSuchMethod(
         Invocation.method(
@@ -897,3 +919,136 @@ class MockWeatherService extends _i1.Mock implements _i8.WeatherService {
         returnValueForMissingStub: null,
       );
 }
+
+/// A class which mocks [SnackbarService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSnackbarService extends _i1.Mock implements _i3.SnackbarService {
+  @override
+  bool get isSnackbarOpen => (super.noSuchMethod(
+        Invocation.getter(#isSnackbarOpen),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  void registerSnackbarConfig(_i3.SnackbarConfig? config) => super.noSuchMethod(
+        Invocation.method(
+          #registerSnackbarConfig,
+          [config],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void registerCustomMainButtonBuilder({
+    dynamic variant,
+    _i5.Widget Function(
+      String?,
+      Function?,
+    )? builder,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #registerCustomMainButtonBuilder,
+          [],
+          {
+            #variant: variant,
+            #builder: builder,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void registerCustomSnackbarConfig({
+    required dynamic variant,
+    _i3.SnackbarConfig? config,
+    _i3.SnackbarConfig Function()? configBuilder,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #registerCustomSnackbarConfig,
+          [],
+          {
+            #variant: variant,
+            #config: config,
+            #configBuilder: configBuilder,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void showSnackbar({
+    String? title = r'',
+    required String? message,
+    dynamic Function(dynamic)? onTap,
+    Duration? duration,
+    String? mainButtonTitle,
+    void Function()? onMainButtonTapped,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #showSnackbar,
+          [],
+          {
+            #title: title,
+            #message: message,
+            #onTap: onTap,
+            #duration: duration,
+            #mainButtonTitle: mainButtonTitle,
+            #onMainButtonTapped: onMainButtonTapped,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i6.Future<dynamic>? showCustomSnackBar({
+    required String? message,
+    _i5.TextStyle? messageTextStyle,
+    required dynamic variant,
+    String? title,
+    _i5.TextStyle? titleTextStyle,
+    String? mainButtonTitle,
+    _i5.ButtonStyle? mainButtonStyle,
+    void Function()? onMainButtonTapped,
+    Function? onTap,
+    Duration? duration,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showCustomSnackBar,
+          [],
+          {
+            #message: message,
+            #messageTextStyle: messageTextStyle,
+            #variant: variant,
+            #title: title,
+            #titleTextStyle: titleTextStyle,
+            #mainButtonTitle: mainButtonTitle,
+            #mainButtonStyle: mainButtonStyle,
+            #onMainButtonTapped: onMainButtonTapped,
+            #onTap: onTap,
+            #duration: duration,
+          },
+        ),
+        returnValueForMissingStub: null,
+      ) as _i6.Future<dynamic>?);
+
+  @override
+  _i6.Future<void> closeSnackbar() => (super.noSuchMethod(
+        Invocation.method(
+          #closeSnackbar,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [Geolocator].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGeolocator extends _i1.Mock implements _i10.Geolocator {}

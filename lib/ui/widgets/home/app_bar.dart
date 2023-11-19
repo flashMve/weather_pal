@@ -39,12 +39,14 @@ class HomeAppBar extends StatelessWidget {
                   color: kcPrimaryTextColor.withOpacity(0.7),
                 ),
               ),
-              Text(
-                locationName,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: kcPrimaryTextColor,
+              Expanded(
+                child: Text(
+                  locationName,
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: kcPrimaryTextColor,
+                  ),
                 ),
               ),
             ],
