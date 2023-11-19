@@ -100,6 +100,36 @@ class StartupView extends StackedView<StartupViewModel> {
                           ),
                           textAlign: TextAlign.center,
                         ).paddingSymmetric(horizontal: 20),
+                        if (!viewModel.done || !viewModel.loadingSplash)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: kcSecondaryBackgroundColor,
+                                    strokeWidth: 0.8,
+                                  ),
+                                ),
+                              ),
+                              horizontalSpaceMedium,
+                              Text(
+                                viewModel.internet.isConnected
+                                    ? 'loading'.tr()
+                                    : 'no_internet'.tr(),
+                                style: TextStyle(
+                                  fontSize:
+                                      getResponsiveFontSize(context, max: 14),
+                                  fontWeight: FontWeight.w500,
+                                  color: kcPrimaryTextColor,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ).paddingOnly(top: 8),
                       ],
                     ),
                   ),

@@ -28,18 +28,20 @@ class HomeAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                DateParser.parse(locale: context.locale.languageCode),
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: kcPrimaryTextColor.withOpacity(0.7),
+              Flexible(
+                child: Text(
+                  DateParser.parse(locale: context.locale.languageCode),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: kcPrimaryTextColor.withOpacity(0.7),
+                  ),
                 ),
               ),
-              Expanded(
+              Flexible(
                 child: Text(
                   locationName,
                   style: const TextStyle(

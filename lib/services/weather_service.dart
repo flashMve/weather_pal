@@ -2,9 +2,13 @@
 
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:weather_pal/app/app.locator.dart';
 import 'package:weather_pal/custom_exceptions/weather_api_exception.dart';
 import 'package:weather_pal/models/weather.dart';
 import 'package:weather_pal/utils/date_parser.dart';
@@ -13,6 +17,8 @@ import 'package:weather_pal/utils/parser.dart';
 
 /// Plugin for fetching weather data in JSON.
 class WeatherService with ListenableServiceMixin {
+  final snackBar = locator<SnackbarService>();
+
   final String? apiKey = '5aecf353afe7419bf7269d121bac2f30';
   Language language = Language.english;
   static const String FIVE_DAY_FORECAST = 'forecast';
@@ -34,6 +40,25 @@ class WeatherService with ListenableServiceMixin {
 
   changeLocale() {
     notifyListeners();
+  }
+
+  getAndSaveWeatherData({Position? pos}) async {
+    try {
+      if (pos != null) {
+        await currentWeatherByLocation(pos.latitude, pos.longitude);
+        await fiveDayForecastByLocation(pos.latitude, pos.longitude);
+      } else {
+        await currentWeatherByCityName('Gujranwala');
+        await fiveDayForecastByCityName('Gujranwala');
+      }
+
+      await saveWeatherDataAsJson();
+    } catch (e) {
+      snackBar.showCustomSnackBar(
+        variant: 'error',
+        message: 'error_fetching_data'.tr(),
+      );
+    }
   }
 
   saveWeatherDataAsJson() async {

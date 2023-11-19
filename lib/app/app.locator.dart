@@ -12,6 +12,7 @@ import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_services/src/snackbar/snackbar_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
+import '../services/internet_connectivity_service.dart';
 import '../services/weather_service.dart';
 
 final locator = StackedLocator.instance;
@@ -30,4 +31,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => WeatherService());
   locator.registerLazySingleton(() => SnackbarService());
+  locator.registerLazySingleton(() => InternetConnectivityService());
 }

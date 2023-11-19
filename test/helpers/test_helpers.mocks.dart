@@ -7,11 +7,12 @@ import 'dart:async' as _i6;
 import 'dart:ui' as _i7;
 
 import 'package:flutter/material.dart' as _i5;
-import 'package:geolocator/geolocator.dart' as _i10;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i4;
 import 'package:stacked_services/stacked_services.dart' as _i3;
 import 'package:weather_pal/models/weather.dart' as _i2;
+import 'package:weather_pal/services/internet_connectivity_service.dart'
+    as _i10;
 import 'package:weather_pal/services/weather_service.dart' as _i8;
 import 'package:weather_pal/utils/language.dart' as _i9;
 
@@ -1048,7 +1049,8 @@ class MockSnackbarService extends _i1.Mock implements _i3.SnackbarService {
       ) as _i6.Future<void>);
 }
 
-/// A class which mocks [Geolocator].
+/// A class which mocks [InternetConnectivityService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGeolocator extends _i1.Mock implements _i10.Geolocator {}
+class MockInternetConnectivityService extends _i1.Mock
+    implements _i10.InternetConnectivityService {}

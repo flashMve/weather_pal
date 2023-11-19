@@ -1,51 +1,53 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:weather_pal/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:weather_pal/services/internet_connectivity_service.dart';
 import 'package:weather_pal/services/weather_service.dart';
+import 'package:weather_pal/ui/common/app_colors.dart';
 import 'package:weather_pal/ui/views/home/home_view.dart';
 import 'package:weather_pal/utils/date_parser.dart';
 
-class StartupViewModel extends BaseViewModel {
+class StartupViewModel extends ReactiveViewModel {
   final _navigationService = locator<NavigationService>();
 
   final weatherService = locator<WeatherService>();
+
   final snackBar = locator<SnackbarService>();
+  final internet = locator<InternetConnectivityService>();
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [internet];
 
   bool done = false;
 
   bool loadingSplash = false;
 
-  getAndSaveWeatherData({Position? pos}) async {
-    if (pos != null) {
-      await weatherService.currentWeatherByLocation(
-          pos.latitude, pos.longitude);
-      await weatherService.fiveDayForecastByLocation(
-          pos.latitude, pos.longitude);
-    } else {
-      await weatherService.currentWeatherByCityName('Gujranwala');
-      await weatherService.fiveDayForecastByCityName('Gujranwala');
-    }
-
-    await weatherService.saveWeatherDataAsJson();
-  }
-
   Future initState({Position? pos}) async {
     try {
-      final data = await weatherService.getWeatherDataAsJson();
+      if (weatherService.weatherData.isNotEmpty) {
+        done = true;
+        notifyListeners();
+        return;
+      }
 
-      log("Data is Loading Let see $data");
+      final data = await weatherService.getWeatherDataAsJson();
 
       if (data != null) {
         if (data.containsKey(DateParser.parse())) {
           done = true;
+          notifyListeners();
           return;
         } else {
-          await getAndSaveWeatherData(pos: pos);
-          done = true;
+          if (internet.isConnected) {
+            await weatherService.getAndSaveWeatherData(pos: pos);
+            done = true;
+          }
+          notifyListeners();
 
           if (done && loadingSplash) {
             _navigationService.replaceWithTransition(
@@ -57,10 +59,11 @@ class StartupViewModel extends BaseViewModel {
           return;
         }
       }
-
-      await getAndSaveWeatherData(pos: pos);
-
-      done = true;
+      if (internet.isConnected) {
+        done = true;
+        await weatherService.getAndSaveWeatherData(pos: pos);
+        notifyListeners();
+      }
 
       if (done && loadingSplash) {
         _navigationService.replaceWithTransition(
@@ -70,36 +73,50 @@ class StartupViewModel extends BaseViewModel {
         );
       }
     } catch (e) {
-      snackBar.showSnackbar(message: 'error_fetching_data'.tr());
+      snackBar.showCustomSnackBar(
+        variant: 'error',
+        message: 'error_fetching_data'.tr(),
+      );
     }
+  }
+
+  void navigateToHome() async {
+    await Future.delayed(const Duration(seconds: 4)).then((value) {
+      loadingSplash = true;
+      log('Loading Splash Done $done $loadingSplash', name: 'StartupViewModel');
+      if (done && loadingSplash) {
+        _navigationService.replaceWithTransition(
+          const HomeView(),
+          duration: const Duration(milliseconds: 1000),
+          transitionStyle: Transition.fade,
+        );
+      }
+    });
   }
 
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
+    internet.connectivityChanges.listen((event) {
+      internet.getConnectivityResult();
+
+      if (internet.isConnected) {
+        log('Internet Connected', name: 'StartupViewModel');
+        initState();
+      }
+    });
+    registerSnackbars();
     try {
       final position = await determinePosition();
-
+      navigateToHome();
       initState(pos: position);
-      await Future.delayed(const Duration(seconds: 4)).then((value) {
-        loadingSplash = true;
-        log('Loading Splash Done $done $loadingSplash',
-            name: 'StartupViewModel');
-        if (done && loadingSplash) {
-          _navigationService.replaceWithTransition(
-            const HomeView(),
-            duration: const Duration(milliseconds: 1000),
-            transitionStyle: Transition.fade,
-          );
-        }
-      });
     } catch (e) {
-      snackBar.showSnackbar(message: e.toString());
-      loadingSplash = true;
+      snackBar.showCustomSnackBar(
+        variant: 'error',
+        message: e.toString(),
+      );
+      navigateToHome();
       initState();
     }
-
-    // This is where you can make decisions on where your app should navigate when
-    // you have custom startup logic
   }
 
   Future<Position> determinePosition() async {
@@ -136,5 +153,43 @@ class StartupViewModel extends BaseViewModel {
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
+  }
+
+  registerSnackbars() {
+    snackBar.registerCustomSnackbarConfig(
+      variant: 'success',
+      config: SnackbarConfig(
+        backgroundColor: Colors.green.shade700,
+        textColor: kcPrimaryTextColor,
+        icon: const Icon(
+          Icons.check,
+          color: kcPrimaryTextColor,
+        ),
+        maxWidth: 500,
+        borderRadius: 4,
+        margin: const EdgeInsets.all(16),
+        snackPosition: SnackPosition.TOP,
+        dismissDirection: DismissDirection.horizontal,
+        duration: const Duration(seconds: 10),
+      ),
+    );
+
+    snackBar.registerCustomSnackbarConfig(
+      variant: "error",
+      config: SnackbarConfig(
+        backgroundColor: Colors.red.shade800,
+        textColor: kcPrimaryTextColor,
+        icon: const Icon(
+          Icons.error,
+          color: kcPrimaryTextColor,
+        ),
+        maxWidth: 500,
+        borderRadius: 4,
+        margin: const EdgeInsets.all(16),
+        dismissDirection: DismissDirection.horizontal,
+        snackPosition: SnackPosition.TOP,
+        duration: const Duration(seconds: 10),
+      ),
+    );
   }
 }

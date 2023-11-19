@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:weather_pal/app/app.locator.dart';
@@ -21,7 +22,7 @@ class HomeViewModel extends ReactiveViewModel {
 
   bool locationEnabled = true;
 
-  Future checkPermisson() async {
+  Future<bool> checkPermisson() async {
     log('Checking Permission');
 
     LocationPermission permission;
@@ -32,22 +33,22 @@ class HomeViewModel extends ReactiveViewModel {
         permission == LocationPermission.whileInUse) {
       locationEnabled = true;
       notifyListeners();
+      return true;
     } else {
       locationEnabled = false;
       notifyListeners();
+      return false;
     }
   }
 
-  openSettings() async {
+  openSettings({bool isResumeApp = false}) async {
+    if (locationEnabled) return;
     await checkPermisson();
     if (locationEnabled) {
       final pos = await Geolocator.getCurrentPosition();
-
       try {
-        await weatherService.currentWeatherByLocation(
-            pos.latitude, pos.longitude);
-        await weatherService.fiveDayForecastByLocation(
-            pos.latitude, pos.longitude);
+        await weatherService.getAndSaveWeatherData(pos: pos);
+
         return;
       } on Exception catch (e) {
         log(e.toString());
@@ -57,12 +58,17 @@ class HomeViewModel extends ReactiveViewModel {
         return;
       }
     }
-
-    await Geolocator.openLocationSettings();
-    await checkPermisson();
+    if (!isResumeApp) await Geolocator.openAppSettings();
   }
 
   initState() async {
     await checkPermisson();
+
+    AppLifecycleListener(
+      onResume: () {
+        if (locationEnabled) return;
+        openSettings(isResumeApp: true);
+      },
+    );
   }
 }

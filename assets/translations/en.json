@@ -35,5 +35,8 @@
     "Squall" : "Squall",
     "Tornado" : "Tornado",
     "Clear" : "Clear",
-    "Clouds" : "Clouds"
+    "Clouds" : "Clouds",
+    "loading": "Loading ...",
+    "Internet": "Internet Not Available",
+    "no_internet": "No Internet"
 }

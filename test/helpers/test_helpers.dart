@@ -5,6 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:weather_pal/models/weather.dart';
 import 'package:weather_pal/services/weather_service.dart';
 import 'package:weather_pal/utils/date_parser.dart';
+import 'package:weather_pal/services/internet_connectivity_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -15,6 +16,8 @@ import 'test_helpers.mocks.dart';
   MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<WeatherService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<SnackbarService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<InternetConnectivityService>(
+      onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -23,6 +26,7 @@ void registerServices() {
   getAndRegisterDialogService();
   getAndRegisterWeatherService();
   getAndRegisterSnackbarService();
+  getAndRegisterInternetConnectivityService();
 // @stacked-mock-register
 }
 
@@ -113,6 +117,13 @@ MockWeatherService getAndRegisterWeatherService(
   }
 
   locator.registerSingleton<WeatherService>(service);
+  return service;
+}
+
+MockInternetConnectivityService getAndRegisterInternetConnectivityService() {
+  _removeRegistrationIfExists<InternetConnectivityService>();
+  final service = MockInternetConnectivityService();
+  locator.registerSingleton<InternetConnectivityService>(service);
   return service;
 }
 // @stacked-mock-create

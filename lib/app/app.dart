@@ -5,6 +5,7 @@ import 'package:weather_pal/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:weather_pal/services/weather_service.dart';
+import 'package:weather_pal/services/internet_connectivity_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -19,6 +20,7 @@ import 'package:weather_pal/services/weather_service.dart';
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: WeatherService),
     LazySingleton(classType: SnackbarService),
+    LazySingleton(classType: InternetConnectivityService),
 // @stacked-service
   ],
   logger: StackedLogger(),
