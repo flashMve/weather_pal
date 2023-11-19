@@ -9,6 +9,14 @@ The App is built using Flutter and Dart.
 - [x] Unit conversion (Celsius, Fahrenheit and Kelvin)
 - [x] Micro-Animations
 
+## App Latest APK From Artifacts Steps
+
+1. Go to the Actions tab
+2. Click on the latest workflow run
+3. Click on the Artifacts tab
+4. Download the APK
+
+
 ## App Download Link
 
 [Download](https://drive.google.com/drive/folders/1g5MZbqDlStBLRES8rpyZvPZQmrk322Tn)
