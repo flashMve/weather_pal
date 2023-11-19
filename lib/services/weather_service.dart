@@ -18,7 +18,7 @@ import 'package:weather_pal/utils/parser.dart';
 /// Plugin for fetching weather data in JSON.
 class WeatherService with ListenableServiceMixin {
   final snackBar = locator<SnackbarService>();
-
+  // Create a json file and read from that TODO:
   final String? apiKey = '5aecf353afe7419bf7269d121bac2f30';
   Language language = Language.english;
   static const String FIVE_DAY_FORECAST = 'forecast';
