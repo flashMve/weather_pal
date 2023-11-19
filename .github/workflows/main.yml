@@ -1,4 +1,4 @@
-name: Release Files for Windows,Mac and Linux
+name: Release Files for Android
 
 on:
   push:
@@ -10,12 +10,18 @@ on:
       - v[0-9]+.[0-9]+.[0-9]+-beta*
 
 jobs:
-  build-windows:
-    name: Build Android APK
-    runs-on: windows-latest
+  build-all-platforms:
+    name: Build and Release
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'  # You can change this to the desired Java version
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -25,10 +31,10 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Build Windows EXE
+      - name: Build Android APK
         run: flutter build apk --release
 
-      - name: Upload Windows release artifacts
+      - name: Upload Android APK release artifacts
         uses: actions/upload-artifact@v3
         with:
           name: android_release
