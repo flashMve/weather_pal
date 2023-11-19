@@ -30,7 +30,7 @@ class HomeView extends StackedView<HomeViewModel> {
           isLocationEnabled: viewModel.locationEnabled,
           onTap: () => viewModel.openSettings(),
         ),
-        appBarHeight: 100,
+        appBarHeight: 130,
         // Body of the page
         body: HomeBody(
           weather: viewModel.weather,

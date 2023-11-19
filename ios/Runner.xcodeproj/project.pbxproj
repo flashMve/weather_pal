@@ -105,7 +105,6 @@
 				B3185D30D4FB45D50B7F02C1 /* Pods-RunnerTests.release.xcconfig */,
 				209458EDB1868B70D4C6246C /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -678,7 +677,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.weatherPal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.faxwoid.weatherPal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

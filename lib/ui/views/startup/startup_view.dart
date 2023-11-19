@@ -21,6 +21,7 @@ class StartupView extends StackedView<StartupViewModel> {
     Widget? child,
   ) {
     return SafeArea(
+      top: false,
       child: Scaffold(
         // backgroundColor: kcBackgroundColor,
         body: MeshGradientBackground(
@@ -29,35 +30,42 @@ class StartupView extends StackedView<StartupViewModel> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                child: const Center(
-                  child: DropShadow(
-                    child: Image(
-                      image: AssetImage('assets/weather/01d.png'),
-                    ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top + 10,
                   ),
-                )
-                    .animate()
-                    .fade()
-                    .then(delay: 500.ms)
-                    .shake(duration: 500.ms)
-                    .then(delay: 500.ms)
-                    .fadeOut()
-                    .swap(builder: (_, __) {
-                  return const Center(
+                  child: const Center(
                     child: DropShadow(
                       spread: 0.1,
-                      blurRadius: 30,
+                      blurRadius: 6,
                       child: Image(
-                        image: AssetImage('assets/weather/01n.png'),
-                        alignment: Alignment.center,
+                        image: AssetImage('assets/weather/01d.png'),
                       ),
                     ),
                   )
                       .animate()
-                      .fadeIn(duration: 500.ms)
-                      .then(delay: 300.ms)
-                      .shimmer();
-                }),
+                      .fade()
+                      .then(delay: 500.ms)
+                      .shake(duration: 500.ms)
+                      .then(delay: 500.ms)
+                      .fadeOut()
+                      .swap(builder: (_, __) {
+                    return const Center(
+                      child: DropShadow(
+                        spread: 0.1,
+                        blurRadius: 30,
+                        child: Image(
+                          image: AssetImage('assets/weather/01n.png'),
+                          alignment: Alignment.center,
+                        ),
+                      ),
+                    )
+                        .animate()
+                        .fadeIn(duration: 500.ms)
+                        .then(delay: 300.ms)
+                        .shimmer();
+                  }),
+                ),
               ),
 
               // Description

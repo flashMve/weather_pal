@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_pal/ui/common/app_colors.dart';
+import 'package:weather_pal/ui/common/ui_helpers.dart';
 import 'package:weather_pal/utils/custom_extension.dart';
 import 'package:weather_pal/utils/date_parser.dart';
 
@@ -41,11 +42,11 @@ class HomeAppBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Flexible(
+              Expanded(
                 child: Text(
                   locationName,
-                  style: const TextStyle(
-                    fontSize: 28,
+                  style: TextStyle(
+                    fontSize: getResponsiveFontSize(context, max: 30),
                     fontWeight: FontWeight.bold,
                     color: kcPrimaryTextColor,
                   ),

@@ -142,31 +142,29 @@ class HomePanel extends StackedView<HomePanelModel> {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    Expanded(
-                                      child: CustomRadioButton(
-                                        elevation: 0,
-                                        // width: 150,
-                                        radius: 0,
-                                        enableShape: true,
-                                        absoluteZeroSpacing: true,
-                                        shapeRadius: 0,
-                                        padding: 0,
-                                        height: 25,
-                                        unSelectedColor:
-                                            kcSecondaryBackgroundColor,
-                                        buttonLables: const ['°C', '°F', '°K'],
-                                        buttonValues: const ["C", "F", 'K'],
-                                        defaultSelected: viewModel
-                                            .weatherService.temperatureIn,
-                                        radioButtonValue: (value) =>
-                                            viewModel.onTemperatureUnitChanged(
-                                                value, context),
-                                        selectedColor: kcPrimaryColor,
-                                        selectedBorderColor:
-                                            kcSecondaryBackgroundColor,
-                                        unSelectedBorderColor:
-                                            kcSecondaryBackgroundColor,
-                                      ),
+                                    CustomRadioButton(
+                                      elevation: 0,
+                                      width: 60,
+                                      radius: 0,
+                                      enableShape: true,
+                                      absoluteZeroSpacing: true,
+                                      shapeRadius: 0,
+                                      padding: 0,
+                                      height: 25,
+                                      unSelectedColor:
+                                          kcSecondaryBackgroundColor,
+                                      buttonLables: const ['°C', '°F', '°K'],
+                                      buttonValues: const ["C", "F", 'K'],
+                                      defaultSelected: viewModel
+                                          .weatherService.temperatureIn,
+                                      radioButtonValue: (value) =>
+                                          viewModel.onTemperatureUnitChanged(
+                                              value, context),
+                                      selectedColor: kcPrimaryColor,
+                                      selectedBorderColor:
+                                          kcSecondaryBackgroundColor,
+                                      unSelectedBorderColor:
+                                          kcSecondaryBackgroundColor,
                                     ),
                                   ],
                                 )

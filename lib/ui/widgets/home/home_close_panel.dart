@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_pal/ui/common/app_colors.dart';
 import 'package:weather_pal/ui/views/home/home_viewmodel.dart';
@@ -28,21 +27,21 @@ class PanelHeader extends StatelessWidget {
             title: viewModel.weather.humidity != null
                 ? '${viewModel.weather.humidity!.toStringAsFixed(1)}%'
                 : "Nil",
-            subtitle: 'humidity'.tr(),
+            subtitle: 'humidity',
           ),
           WeatherInfoCard(
             icon: 'assets/weather/rain_chance.png',
             title: viewModel.weather.pressure != null
                 ? '${viewModel.weather.pressure!.toStringAsFixed(0)} hPa'
                 : "Nil",
-            subtitle: 'pressure'.tr(),
+            subtitle: 'pressure',
           ),
           WeatherInfoCard(
             icon: 'assets/weather/wind.png',
             title: viewModel.weather.windSpeed != null
                 ? '${viewModel.weather.windSpeed} km/h'
                 : "Nil",
-            subtitle: 'wind_speed'.tr(),
+            subtitle: 'wind_speed',
           ),
         ],
       ),

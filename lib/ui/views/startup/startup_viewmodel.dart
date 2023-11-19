@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -106,9 +107,13 @@ class StartupViewModel extends ReactiveViewModel {
     });
     registerSnackbars();
     try {
-      final position = await determinePosition();
       navigateToHome();
-      initState(pos: position);
+      if (!Platform.isMacOS) {
+        final position = await determinePosition();
+        initState(pos: position);
+      } else {
+        initState();
+      }
     } catch (e) {
       snackBar.showCustomSnackBar(
         variant: 'error',

@@ -27,7 +27,7 @@ class Temperature {
   }
 
   String get celsiusString =>
-      celsius != null ? '${celsius!.toStringAsFixed(0)}°C' : "No";
+      celsius != null ? '${celsius!.toStringAsFixed(1)}°C' : "No";
 
   String get fahrenheitString =>
       fahrenheit != null ? '${fahrenheit!.toStringAsFixed(1)}°F' : "No";

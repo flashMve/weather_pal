@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart' as easy;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_pal/models/weather.dart';
 import 'package:weather_pal/ui/common/app_colors.dart';
 import 'package:weather_pal/ui/common/ui_helpers.dart';
@@ -49,10 +50,10 @@ class ForecastInfoCard extends StatelessWidget {
                           style: context.titleLarge!.copyWith(
                             color: kcPrimaryTextColor,
                             fontSize: unit == 'C'
-                                ? 60
+                                ? 50.sp
                                 : unit == 'F'
-                                    ? 50
-                                    : 45,
+                                    ? 40.sp
+                                    : 35.sp,
                           ),
                         ).paddingOnly(left: 20),
                       ),
